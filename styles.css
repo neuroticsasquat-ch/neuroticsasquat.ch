@@ -191,38 +191,34 @@ img { max-width: 100%; height: auto; display: block; }
   display: block;
 }
 
-/* gradient scrims so the text stays legible over any screenshot */
+/* gradient scrim so the text stays legible over any screenshot */
 .release-art::before {
-  /* top scrim — for the catalog number */
+  /* top scrim — for the catalog number and title */
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 35%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0));
+  /* ...and fade it out toward the left, so each screenshot's own header —
+     which sits in the top-left corner — reads through unshaded */
+  -webkit-mask-image: linear-gradient(to left, #000 0%, #000 30%, transparent 85%);
+  mask-image: linear-gradient(to left, #000 0%, #000 30%, transparent 85%);
   pointer-events: none;
   z-index: 1;
 }
-.release-art::after {
-  /* bottom scrim — for the title */
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 55%;
-  background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0));
-  pointer-events: none;
-  z-index: 1;
-}
-/* no scrims when there's no screenshot — solid color blocks don't need them */
-.release-art.no-image::before,
-.release-art.no-image::after { display: none; }
+/* no scrim when there's no screenshot — solid color blocks don't need it */
+.release-art.no-image::before { display: none; }
 
+/* catalog number stacked over the title, both in the top-right corner */
 .art-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 0.35rem;
+  text-align: right;
   padding: 1.25rem;
   color: rgba(244, 240, 232, 0.92);
   position: relative;
